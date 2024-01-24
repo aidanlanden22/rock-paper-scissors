@@ -13,8 +13,6 @@ function getComputerChoice() {
 
 function playRound(playerChoice, computerChoice = getComputerChoice()) {
     const losingMove = moveOptions[playerChoice]; //Lookup 
-    console.log("computer " + computerChoice);
-    console.log("player: " + playerChoice);
     if(!losingMove) { // Check for valid input, prompt for another choice if invalid
         return playRound(prompt("Please enter a valid move option of Rock, Paper, or Scissors"));
     }
@@ -38,7 +36,6 @@ function game() {
     for(i = 0; i < 5; i++) {
         const playerChoice = result ? prompt(result + "\n\nRock! Paper! Scisscors! Shoot! ") : prompt("Lets play rock paper scissors! Best of 5 wins!\n\nRock! Paper! Scisscors! Shoot! ");
         // If player clicks cancel, end the game gracefully
-        console.log(playerChoice);
         if(!playerChoice) {
             return;
         }
@@ -54,4 +51,4 @@ function game() {
     }
 }
 
-console.log(game());
+game();
