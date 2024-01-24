@@ -1,4 +1,4 @@
-// key value pairing of all valid moves and the move they beat
+// Key value pairing of all valid moves and their reciprocal losing moves
 const moveOptions = {
   rock: "scissors",
   paper: "rock",
@@ -29,8 +29,8 @@ function playRound(playerChoice, computerChoice = getComputerChoice()) {
     // Computer loses to player
     return "You win! " + playerChoice + " beats " + computerChoice;
   }
-
-  return "You lose! " + computerChoice + " beats " + playerChoice; // Player loses to computer
+  // Player loses to computer
+  return "You lose! " + computerChoice + " beats " + playerChoice; 
 }
 
 function game() {
@@ -43,6 +43,7 @@ function game() {
       : prompt(
           "Lets play rock paper scissors! Best of 5 wins!\n\nRock! Paper! Scisscors! Shoot! "
         );
+     
     // If player clicks cancel, end the game gracefully
     if (!playerChoice) {
       return;
