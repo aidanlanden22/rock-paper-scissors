@@ -12,22 +12,46 @@ function getComputerChoice() {
 }
 
 function playRound(playerChoice, computerChoice = getComputerChoice()) {
-    const losingMove = moveOptions[playerChoice.toLowerCase()]; //Lookup 
+    const losingMove = moveOptions[playerChoice]; //Lookup 
     console.log("computer " + computerChoice);
     console.log("player: " + playerChoice);
     if(!losingMove) { // Check for valid input, prompt for another choice if invalid
         return playRound(prompt("Please enter a valid move option of Rock, Paper, or Scissors"));
     }
 
-    if(computerChoice.toLowerCase() == playerChoice) { // Computer and player tie, prompt for another choice
+    if(computerChoice == playerChoice) { // Computer and player tie, prompt for another choice
         return playRound(prompt("Woah! Its a tie! Lets go again "))
     }
 
-    if(computerChoice.toLowerCase() == losingMove) { // Computer loses to player
+    if(computerChoice == losingMove) { // Computer loses to player
         return "You win! " + playerChoice + " beats " + computerChoice;
     }
 
     return "You lose! " + computerChoice + " beats " + playerChoice; // Player loses to computer
 }
+ 
+function game() {
+    //window.alert("Let's play rock paper scissors!  Best of 5 wins!");
+    var playerWins = 0;
+    var result;
 
-console.log(playRound(prompt("Rock! Paper! Scisscors! Shoot! ")));
+    for(i = 0; i < 5; i++) {
+        const playerChoice = result ? prompt(result + "\n\nRock! Paper! Scisscors! Shoot! ") : prompt("Lets play rock paper scissors! Best of 5 wins!\n\nRock! Paper! Scisscors! Shoot! ");
+        // If player clicks cancel, end the game gracefully
+        console.log(playerChoice);
+        if(!playerChoice) {
+            return;
+        }
+
+        result = playRound(playerChoice.toLowerCase());
+        playerWins += result.includes("win") ? 1 : 0;
+    }
+
+    if(playerWins == 3) {
+        window.alert("You won 3 out of 5!  You're the big winner!!");
+    } else {
+        window.alert("I won 3 out of 5!  Better luck next time");
+    }
+}
+
+console.log(game());
