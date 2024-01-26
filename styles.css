@@ -1,0 +1,21 @@
+body {
+    text-align: center;;
+}
+
+.header {
+    padding-top: 16px;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.body {
+    padding-top: 16px;
+    font-size: 32px;
+    font-style: italic;
+}
+
+.scoreboard {
+    display: none;
+    justify-content: center;
+    gap: 8px;
+}

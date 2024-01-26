@@ -1,8 +1,8 @@
 // Key value pairing of all valid moves and their reciprocal losing moves
 const moveOptions = {
-  rock: "scissors",
-  paper: "rock",
-  scissors: "paper",
+  Rock: "Scissors",
+  Paper: "Rock",
+  Scissors: "Paper",
 };
 
 // Randomly select a move choice for the computer
@@ -15,25 +15,29 @@ function playRound(playerChoice, computerChoice = getComputerChoice()) {
   const losingMove = moveOptions[playerChoice]; //Lookup
   if (!losingMove) {
     // Check for valid input, prompt for another choice if invalid
-    return playRound(
+    return "Please enter a valid move option of Rock, Paper, or Scissors";
+    /*return playRound(
       prompt("Please enter a valid move option of Rock, Paper, or Scissors")
-    );
+    );*/
   }
 
   if (computerChoice == playerChoice) {
     // Computer and player tie, prompt for another choice
-    return playRound(prompt("Woah! Its a tie! Lets go again "));
+    return "Woah! Its a tie! Lets go again "
+    //return playRound(prompt("Woah! Its a tie! Lets go again "));
   }
 
   if (computerChoice == losingMove) {
     // Computer loses to player
+    playerScore ++;
     return "You win! " + playerChoice + " beats " + computerChoice;
   }
   // Player loses to computer
+  computerScore ++;
   return "You lose! " + computerChoice + " beats " + playerChoice; 
 }
 
-function game() {
+/*function game() {
   var playerWins = 0;
   var result;
 
@@ -58,6 +62,58 @@ function game() {
   } else {
     window.alert("I won 3 out of 5!  Better luck next time");
   }
-}
+}*/
 
-game();
+const body = document.querySelector('body');
+const scoreBoard = document.querySelector('.scoreboard');
+const playerScoreDisplay = document.querySelector('.player-score');
+const computerScoreDisplay = document.querySelector('.computer-score');
+let playerScore = 0;
+let computerScore = 0;
+
+let playerScoreSpan = document.createElement('span');
+let computerScoreSpan = document.createElement('span');
+
+playerScoreSpan.innerText = playerScore;
+computerScoreSpan.innerText = computerScore;
+
+playerScoreDisplay.appendChild(playerScoreSpan);
+computerScoreDisplay.appendChild(computerScoreSpan);
+body.addEventListener('click', event => {
+  //check for previous result and remove from the DOM
+  let previousResult = document.querySelector('.result');
+  if(previousResult) {
+    body.removeChild(previousResult)
+  }
+
+  if(event.target.tagName != "BUTTON") {
+    return;
+  }
+
+  let result = playRound(event.target.innerText);
+  playerScoreSpan.innerText = playerScore;
+  computerScoreSpan.innerText = computerScore;
+
+  // toggle on display of scoreboard 
+  if(scoreBoard.style.display != "flex") {
+    scoreBoard.style.display = "flex";
+  }
+
+  let div = document.createElement('div');
+  div.innerText = result;
+  div.classList.add('result');
+  body.appendChild(div);
+
+  if(computerScore == 3) {
+    let finalResult = document.createElement('div');
+    finalResult.innerText = 'Thats best 3 out of 5. I win! Better luck next time'
+    body.appendChild(finalResult);
+  }
+
+  if(playerScore == 3) {
+    let finalResult = document.createElement('div');
+    finalResult.innerText = 'Thats best 3 out of 5. you win! Congrats!'
+    body.appendChild(finalResult);
+  }
+
+})
